@@ -2,15 +2,7 @@ name: Release Creation
 
 on:
   release:
-    types: [published, edited]
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to build release for'
-        required: true
-
-permissions:
-  contents: write
+    types: [published]
 
 jobs:
   build:
@@ -19,10 +11,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Copy CSS file to root for packaging
-      - name: Copy CSS file
+      # Combine CSS files into a single CSS file
+      - name: Combine CSS files
         run: |
-         cp styles/effectivetray.css ./
+         cat styles/*.css > effectivetray.css
 
       # Get part of the tag after the `v`.
       - name: Extract tag version number
@@ -44,8 +36,8 @@ jobs:
           url: https://github.com/${{github.repository}}
           manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
           download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
-          styles: "[\"styles/effectivetray.css\"]"
-          esmodules: "[\"scripts/setup.mjs\"]"
+          styles: "[\"effectivetray.css\"]"
+          esmodules: "[\"effectivetray.mjs\"]"
 
       # Substitute the Manifest and Download URLs in the module.json
       # for a PRE RELEASE.
@@ -61,8 +53,8 @@ jobs:
           url: https://github.com/${{github.repository}}
           manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
           download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
-          styles: "[\"styles/effectivetray.css\"]"
-          esmodules: "[\"scripts/setup.mjs\"]"
+          styles: "[\"effectivetray.css\"]"
+          esmodules: "[\"effectivetray.mjs\"]"
 
         # Set up Node
       - name: Use Node.js ${{ matrix.node-version }}
@@ -82,7 +74,7 @@ jobs:
 
       # Create zip file.
       - name: Create ZIP archive
-        run: zip -r ./module.zip module.json scripts/ styles/ lang/
+        run: zip -r ./module.zip module.json effectivetray.mjs effectivetray.css lang/
 
       # Create a release for this specific version.
       - name: Update Release with Files

@@ -2,12 +2,15 @@ name: Release Creation
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
   workflow_dispatch:
     inputs:
       tag:
         description: 'Tag to build release for'
         required: true
+
+permissions:
+  contents: write
 
 jobs:
   build:

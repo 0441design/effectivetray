@@ -6,7 +6,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/etiquettestartshere/effectivetray.git"
+    "url": "git+https://github.com/0441design/effectivetray.git"
   },
   "keywords": [
     "fvtt",
@@ -14,9 +14,9 @@
   ],
   "author": "alakshana",
   "bugs": {
-    "url": "https://github.com/etiquettestartshere/effectivetray"
+    "url": "https://github.com/0441design/effectivetray"
   },
-  "homepage": "https://github.com/etiquettestartshere/effectivetray",
+  "homepage": "https://github.com/0441design/effectivetray",
   "devDependencies": {
     "rollup": "^4.22.4"
   }
